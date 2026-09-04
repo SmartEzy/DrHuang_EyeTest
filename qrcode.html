@@ -26,24 +26,25 @@
             margin-bottom: 40px;
         }
         
-        /* 🚀 按鈕預設狀態（未點選）：白底、深灰字、深灰邊框 */
+        /* 🚀 按鈕預設狀態（未點選）：白底、中淺灰字、淺灰邊框，降低視覺干擾 */
         .btn {
             padding: 18px 38px;
             font-size: 20px;
             font-weight: bold;
-            color: #4b5563;
+            color: #6b7280;          /* 調淡的文字顏色 */
             background-color: #ffffff; 
-            border: 2px solid #4b5563;
+            border: 2px solid #d1d5db; /* 調淡的邊框顏色 */
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
             transition: all 0.2s ease;
         }
         
-        /* 🚀 按鈕作用中狀態（已點選）：深灰底、白字 */
+        /* 🚀 按鈕作用中狀態（已點選）：深灰底、白字、深灰邊框（強烈對比） */
         .btn.active {
             background-color: #4b5563;
             color: #ffffff;
+            border-color: #4b5563;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 微微內凹感 */
         }
 
@@ -77,9 +78,9 @@
 <body>
 
     <div class="button-group">
-        <!-- 🚀 近距離閱讀放左邊 -->
+        <!-- 近距離閱讀放左邊 -->
         <button id="btnNear" class="btn" onclick="showQR('near')">近距離閱讀測試</button>
-        <!-- 🚀 黃斑部檢查放右邊 -->
+        <!-- 黃斑部檢查放右邊 -->
         <button id="btnAmsler" class="btn" onclick="showQR('amsler')">黃斑部自我檢查</button>
     </div>
 
@@ -97,7 +98,7 @@
             // 顯示區塊
             qrArea.style.display = 'block';
 
-            // 🚀 先清除所有按鈕的「已點選」狀態
+            // 先清除所有按鈕的「已點選」狀態
             btnNear.classList.remove('active');
             btnAmsler.classList.remove('active');
 
@@ -111,7 +112,7 @@
             }
         }
 
-        // 🚀 網頁載入完成後，自動觸發「近距離閱讀」的點擊事件
+        // 網頁載入完成後，自動觸發「近距離閱讀」的點擊事件
         window.addEventListener('load', function() {
             showQR('near');
         });
