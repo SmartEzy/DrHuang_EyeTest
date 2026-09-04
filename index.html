@@ -28,7 +28,7 @@
             --symptom-bg: #ffffff; 
             --inst-bg: #e5e7eb;  
             --inst-text: #1f2937; 
-            /* 清除按鈕配色：淺紅底、深紅字、微紅邊框 */
+            /* 清除按鈕配色(啟用時)：淺紅底、深紅字、微紅邊框 */
             --btn-clear-bg: #fee2e2;
             --btn-clear-text: #b91c1c;
             --btn-clear-border: #fca5a5;
@@ -48,7 +48,7 @@
             --symptom-bg: #1a1a1a; 
             --inst-bg: #374151;   
             --inst-text: #f9fafb; 
-            /* 清除按鈕配色(高對比)：暗紅底、淺紅字、深紅邊框 */
+            /* 清除按鈕配色(啟用時，高對比)：暗紅底、淺紅字、深紅邊框 */
             --btn-clear-bg: #7f1d1d;
             --btn-clear-text: #fecaca;
             --btn-clear-border: #991b1b;
@@ -137,7 +137,7 @@
         .instruction-and-clear-header {
             display: flex; 
             justify-content: space-between; 
-            align-items: center; 
+            align-items: flex-end; 
             margin-bottom: 8px; 
             gap: 8px; 
         }
@@ -152,6 +152,9 @@
         }
         .amsler-instruction li { 
             margin-bottom: 2px; 
+        }
+        .amsler-instruction li:last-child {
+            margin-bottom: 0;
         }
         
         .amsler-grid-wrapper { width: 100%; max-width: 600px; margin: 0 auto 12px auto; }
@@ -172,19 +175,19 @@
             touch-action: none; cursor: crosshair;
         }
         
+        /* 🚀 稍微加大按鈕間距至 16px，減少誤觸 */
         .action-buttons {
             display: flex;
-            flex-direction: column; 
-            gap: 8px;
+            flex-direction: row; 
+            gap: 16px; 
             flex-shrink: 0; 
-            align-items: stretch; 
         }
 
         .clear-btn {
             display: block; 
-            width: 100%; 
+            width: auto; 
             margin: 0; 
-            padding: 6px 14px; 
+            padding: 6px 12px; 
             background-color: var(--btn-clear-bg); 
             color: var(--btn-clear-text); 
             border: 1px solid var(--btn-clear-border);
@@ -193,6 +196,7 @@
             font-weight: bold; 
             cursor: pointer; 
             text-align: center;
+            line-height: 1.2; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
             box-sizing: border-box;
@@ -201,12 +205,27 @@
             transform: scale(0.95);
             opacity: 0.8;
         }
+        
+        /* 🚀 新增：清除按鈕的無效化(Disabled)灰色狀態 */
+        .clear-btn:disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            border-color: #e5e7eb;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+        body.dark-mode .clear-btn:disabled {
+            background-color: #374151;
+            color: #6b7280;
+            border-color: #374151;
+        }
 
         .toggle-draw-btn {
             display: block; 
-            width: 100%; 
+            width: auto; 
             margin: 0; 
-            padding: 6px 14px; 
+            padding: 6px 12px; 
             background-color: var(--btn-draw-bg); 
             color: var(--btn-draw-text); 
             border: 1px solid var(--btn-draw-border);
@@ -215,6 +234,7 @@
             font-weight: bold; 
             cursor: pointer; 
             text-align: center;
+            line-height: 1.2; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
             box-sizing: border-box;
@@ -259,8 +279,8 @@
         .symptom-main-label {
             width: 100%;
             aspect-ratio: 1 / 1; 
-            background-color: var(--inst-bg);
-            color: var(--inst-text);
+            background-color: #6b7280; 
+            color: #ffffff;            
             border-radius: 8px; 
             display: flex;
             flex-direction: column;
@@ -326,16 +346,16 @@
             <div class="amsler-instruction">
                 <ol>
                     <li><strong>先遮一眼</strong>，用另一眼注視格子的<strong>中心黑點</strong></li> 
-                    <!-- 🚀 只讓「扭曲、模糊或黑影」這幾個字粗體 -->
-                    <li>查看是否發現<strong>扭曲、模糊或黑影</strong>區域</li>
+                    <li>查看是否發現<strong>扭曲、模糊</strong>或<strong>黑影</strong>區域</li>
                     <li>按<strong style="color: var(--btn-draw-text);">開始標記</strong>可圈選，<strong style="color: var(--btn-clear-text);">清除標記</strong>可清除</li>
                     <li><strong>換遮另一眼</strong>，重複以上步驟</li>
                 </ol>
             </div>
             
             <div class="action-buttons">
-                <button id="toggleDrawBtn" class="toggle-draw-btn">開始標記</button>
-                <button id="clearCanvasBtn" class="clear-btn">清除標記</button>
+                <button id="toggleDrawBtn" class="toggle-draw-btn">開始<br>標記</button>
+                <!-- 🚀 預設加入 disabled 屬性，讓它一開始是反灰的 -->
+                <button id="clearCanvasBtn" class="clear-btn" disabled>清除<br>標記</button>
             </div>
         </div>
         
@@ -439,8 +459,8 @@
         
         let isDrawing = false;
         let isDrawModeEnabled = false; 
+        let hasDrawing = false; // 🚀 新增變數：記錄畫布上是否有圖案
 
-        // 預設讓畫布「穿透」，不會阻擋使用者滑動
         canvas.style.pointerEvents = 'none';
 
         function resizeCanvas() {
@@ -459,11 +479,11 @@
             isDrawModeEnabled = !isDrawModeEnabled;
             if (isDrawModeEnabled) {
                 this.classList.add('active');
-                this.innerText = '結束標記';
+                this.innerHTML = '結束<br>標記';
                 canvas.style.pointerEvents = 'auto'; 
             } else {
                 this.classList.remove('active');
-                this.innerText = '開始標記';
+                this.innerHTML = '開始<br>標記';
                 canvas.style.pointerEvents = 'none'; 
                 stopDrawing(); 
             }
@@ -500,6 +520,12 @@
             const pos = getPointerPos(e);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
+            
+            // 🚀 當病患成功畫出線條時，將清除按鈕解鎖（變回紅色）
+            if (!hasDrawing) {
+                hasDrawing = true;
+                clearBtn.disabled = false;
+            }
         }
 
         function stopDrawing(e) {
@@ -518,7 +544,12 @@
         canvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
         clearBtn.addEventListener('click', function() {
+            if (!hasDrawing) return; // 雙重保險
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 🚀 清除完畢後，再次將按鈕鎖定（變回灰色）
+            hasDrawing = false;
+            clearBtn.disabled = true;
         });
     </script>
 </body>
