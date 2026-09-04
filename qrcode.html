@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>診間 QR Code 快速導覽</title>
+    <title>QR code</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -11,15 +11,9 @@
             padding: 40px 20px;
             background-color: #f3f4f6; /* 柔和的淺灰背景，不刺眼 */
             text-align: center;
-            color: #1f2937;
-        }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 40px;
-            color: #374151;
         }
         
-        /* 🚀 按鈕區塊：並排顯示，超大點擊範圍 */
+        /* 按鈕區塊：並排顯示，超大點擊範圍 */
         .button-group {
             display: flex;
             justify-content: center;
@@ -32,6 +26,7 @@
             font-size: 20px;
             font-weight: bold;
             color: white;
+            background-color: #4b5563; /* 統一深灰色 */
             border: none;
             border-radius: 12px;
             cursor: pointer;
@@ -42,14 +37,8 @@
             transform: scale(0.97);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .btn-amsler {
-            background-color: #0284c7; /* 呼應黃斑部的醫療藍 */
-        }
-        .btn-near {
-            background-color: #4b5563; /* 呼應近距離閱讀的深灰 */
-        }
 
-        /* 🚀 QR Code 顯示區塊 */
+        /* QR Code 顯示區塊 */
         .qr-display-area {
             display: none; /* 預設隱藏，點擊後才顯示 */
             animation: fadeIn 0.3s ease-in-out;
@@ -57,13 +46,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .qr-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #111827;
         }
         
         /* 給 QR code 加上漂亮的白底相框，幫助手機更容易對焦 */
@@ -80,34 +62,28 @@
 </head>
 <body>
 
-    <h1>請選擇要提供給病患的檢查</h1>
-
     <div class="button-group">
-        <button class="btn btn-amsler" onclick="showQR('amsler')">👁️ 黃斑部自我檢查</button>
-        <button class="btn btn-near" onclick="showQR('near')">📖 近距離閱讀測試</button>
+        <button class="btn" onclick="showQR('amsler')">黃斑部自我檢查</button>
+        <button class="btn" onclick="showQR('near')">近距離閱讀測試</button>
     </div>
 
     <div id="qrArea" class="qr-display-area">
-        <div id="qrTitle" class="qr-title"></div>
         <img id="qrImage" class="qr-image" src="" alt="QR Code">
     </div>
 
     <script>
         function showQR(type) {
             const qrArea = document.getElementById('qrArea');
-            const qrTitle = document.getElementById('qrTitle');
             const qrImage = document.getElementById('qrImage');
 
             // 顯示區塊
             qrArea.style.display = 'block';
 
-            // 根據點擊的按鈕切換內容與圖片
+            // 根據點擊的按鈕切換圖片
             if (type === 'amsler') {
-                qrTitle.innerText = '請掃描：黃斑部自我檢查';
                 // 讀取您上傳的黃斑部 QR Code 圖片檔名
                 qrImage.src = 'qr_amsler.png'; 
             } else if (type === 'near') {
-                qrTitle.innerText = '請掃描：近距離閱讀測試';
                 // 讀取您上傳的近距離閱讀 QR Code 圖片檔名
                 qrImage.src = 'qr_near.png'; 
             }
