@@ -135,13 +135,15 @@
         }
         
         .instruction-and-clear-header {
-            position: relative;
-            display: block; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
             margin-bottom: 8px; 
+            gap: 8px; 
         }
 
         .amsler-instruction {
-            display: block; 
+            flex: 1; 
         }
         .amsler-instruction ol { 
             padding-left: 20px; 
@@ -170,19 +172,17 @@
             touch-action: none; cursor: crosshair;
         }
         
-        /* 按鈕群組容器：利用絕對定位浮動在右下角的空白處，不佔用行數 */
         .action-buttons {
-            position: absolute;
-            right: 0;           
-            bottom: 0px; 
             display: flex;
+            flex-direction: column; 
             gap: 8px;
-            z-index: 20; 
+            flex-shrink: 0; 
+            align-items: stretch; 
         }
 
         .clear-btn {
-            display: inline-block; 
-            width: auto; 
+            display: block; 
+            width: 100%; 
             margin: 0; 
             padding: 6px 14px; 
             background-color: var(--btn-clear-bg); 
@@ -195,6 +195,7 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
+            box-sizing: border-box;
         }
         .clear-btn:active {
             transform: scale(0.95);
@@ -202,8 +203,8 @@
         }
 
         .toggle-draw-btn {
-            display: inline-block; 
-            width: auto; 
+            display: block; 
+            width: 100%; 
             margin: 0; 
             padding: 6px 14px; 
             background-color: var(--btn-draw-bg); 
@@ -216,6 +217,7 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
+            box-sizing: border-box;
         }
         .toggle-draw-btn.active {
             background-color: var(--btn-draw-active-bg);
@@ -322,11 +324,11 @@
         
         <div class="instruction-and-clear-header">
             <div class="amsler-instruction">
-                <!-- 🚀 依照您的需求進行文字與顏色修改 -->
                 <ol>
                     <li><strong>先遮一眼</strong>，用另一眼注視格子的<strong>中心黑點</strong></li> 
-                    <li><strong>查看是否發現</strong><strong>扭曲、模糊或黑影</strong>區域</li>
-                    <li>可點擊<strong style="color: var(--btn-draw-text);">開始標記</strong>在格子上圈選，清除請按<strong style="color: var(--btn-clear-text);">清除標記</strong></li>
+                    <!-- 🚀 只讓「扭曲、模糊或黑影」這幾個字粗體 -->
+                    <li>查看是否發現<strong>扭曲、模糊或黑影</strong>區域</li>
+                    <li>按<strong style="color: var(--btn-draw-text);">開始標記</strong>可圈選，<strong style="color: var(--btn-clear-text);">清除標記</strong>可清除</li>
                     <li><strong>換遮另一眼</strong>，重複以上步驟</li>
                 </ol>
             </div>
