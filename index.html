@@ -28,11 +28,9 @@
             --symptom-bg: #ffffff; 
             --inst-bg: #e5e7eb;  
             --inst-text: #1f2937; 
-            /* 清除按鈕配色(啟用時)：淺紅底、深紅字、微紅邊框 */
             --btn-clear-bg: #fee2e2;
             --btn-clear-text: #b91c1c;
             --btn-clear-border: #fca5a5;
-            /* 標記按鈕配色：淺藍底、深藍字 */
             --btn-draw-bg: #e0f2fe;
             --btn-draw-text: #0284c7;
             --btn-draw-border: #bae6fd;
@@ -48,11 +46,9 @@
             --symptom-bg: #1a1a1a; 
             --inst-bg: #374151;   
             --inst-text: #f9fafb; 
-            /* 清除按鈕配色(啟用時，高對比)：暗紅底、淺紅字、深紅邊框 */
             --btn-clear-bg: #7f1d1d;
             --btn-clear-text: #fecaca;
             --btn-clear-border: #991b1b;
-            /* 標記按鈕配色(高對比)：暗藍底、淺藍字 */
             --btn-draw-bg: #0f172a;
             --btn-draw-text: #38bdf8;
             --btn-draw-border: #0284c7;
@@ -139,16 +135,16 @@
             justify-content: space-between; 
             align-items: flex-end; 
             margin-bottom: 8px; 
-            gap: 8px; 
+            gap: 4px; /* 🚀 縮小文字與按鈕區塊的間距 */
         }
 
         .amsler-instruction {
             flex: 1; 
         }
         .amsler-instruction ol { 
-            padding-left: 20px; 
+            padding-left: 18px; /* 🚀 縮小一點點縮排以節省空間 */
             margin: 0; 
-            font-size: 15px; 
+            font-size: 14px; /* 🚀 稍微調小字體，確保不會換行 */
         }
         .amsler-instruction li { 
             margin-bottom: 2px; 
@@ -175,24 +171,20 @@
             touch-action: none; cursor: crosshair;
         }
         
-        /* 🚀 稍微加大按鈕間距至 16px，減少誤觸 */
         .action-buttons {
             display: flex;
             flex-direction: row; 
-            gap: 16px; 
+            gap: 6px; /* 🚀 縮小按鈕之間的間距，還給文字更多空間 */
             flex-shrink: 0; 
         }
 
-        .clear-btn {
+        .clear-btn, .toggle-draw-btn {
             display: block; 
             width: auto; 
             margin: 0; 
-            padding: 6px 12px; 
-            background-color: var(--btn-clear-bg); 
-            color: var(--btn-clear-text); 
-            border: 1px solid var(--btn-clear-border);
+            padding: 6px 8px; /* 🚀 減少按鈕左右留白，讓按鈕變瘦 */
             border-radius: 8px; 
-            font-size: 14px; 
+            font-size: 13px; /* 🚀 稍微縮小按鈕文字 */
             font-weight: bold; 
             cursor: pointer; 
             text-align: center;
@@ -201,12 +193,16 @@
             transition: all 0.2s ease;
             box-sizing: border-box;
         }
+
+        .clear-btn {
+            background-color: var(--btn-clear-bg); 
+            color: var(--btn-clear-text); 
+            border: 1px solid var(--btn-clear-border);
+        }
         .clear-btn:active {
             transform: scale(0.95);
             opacity: 0.8;
         }
-        
-        /* 🚀 新增：清除按鈕的無效化(Disabled)灰色狀態 */
         .clear-btn:disabled {
             background-color: #e5e7eb;
             color: #9ca3af;
@@ -222,22 +218,9 @@
         }
 
         .toggle-draw-btn {
-            display: block; 
-            width: auto; 
-            margin: 0; 
-            padding: 6px 12px; 
             background-color: var(--btn-draw-bg); 
             color: var(--btn-draw-text); 
             border: 1px solid var(--btn-draw-border);
-            border-radius: 8px; 
-            font-size: 14px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-align: center;
-            line-height: 1.2; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-            box-sizing: border-box;
         }
         .toggle-draw-btn.active {
             background-color: var(--btn-draw-active-bg);
@@ -345,7 +328,8 @@
         <div class="instruction-and-clear-header">
             <div class="amsler-instruction">
                 <ol>
-                    <li><strong>先遮一眼</strong>，用另一眼注視格子的<strong>中心黑點</strong></li> 
+                    <!-- 🚀 刪除「格子的」三個字，爭取最關鍵的空間 -->
+                    <li><strong>先遮一眼</strong>，用另一眼注視<strong>中心黑點</strong></li> 
                     <li>查看是否發現<strong>扭曲、模糊</strong>或<strong>黑影</strong>區域</li>
                     <li>按<strong style="color: var(--btn-draw-text);">開始標記</strong>可圈選，<strong style="color: var(--btn-clear-text);">清除標記</strong>可清除</li>
                     <li><strong>換遮另一眼</strong>，重複以上步驟</li>
@@ -354,7 +338,6 @@
             
             <div class="action-buttons">
                 <button id="toggleDrawBtn" class="toggle-draw-btn">開始<br>標記</button>
-                <!-- 🚀 預設加入 disabled 屬性，讓它一開始是反灰的 -->
                 <button id="clearCanvasBtn" class="clear-btn" disabled>清除<br>標記</button>
             </div>
         </div>
@@ -459,7 +442,7 @@
         
         let isDrawing = false;
         let isDrawModeEnabled = false; 
-        let hasDrawing = false; // 🚀 新增變數：記錄畫布上是否有圖案
+        let hasDrawing = false; 
 
         canvas.style.pointerEvents = 'none';
 
@@ -521,7 +504,6 @@
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             
-            // 🚀 當病患成功畫出線條時，將清除按鈕解鎖（變回紅色）
             if (!hasDrawing) {
                 hasDrawing = true;
                 clearBtn.disabled = false;
@@ -544,10 +526,9 @@
         canvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
         clearBtn.addEventListener('click', function() {
-            if (!hasDrawing) return; // 雙重保險
+            if (!hasDrawing) return; 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 🚀 清除完畢後，再次將按鈕鎖定（變回灰色）
             hasDrawing = false;
             clearBtn.disabled = true;
         });
