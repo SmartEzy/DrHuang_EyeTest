@@ -135,16 +135,16 @@
             justify-content: space-between; 
             align-items: flex-end; 
             margin-bottom: 8px; 
-            gap: 4px; /* 🚀 縮小文字與按鈕區塊的間距 */
+            gap: 4px; 
         }
 
         .amsler-instruction {
             flex: 1; 
         }
         .amsler-instruction ol { 
-            padding-left: 18px; /* 🚀 縮小一點點縮排以節省空間 */
+            padding-left: 18px; 
             margin: 0; 
-            font-size: 14px; /* 🚀 稍微調小字體，確保不會換行 */
+            font-size: 14px; 
         }
         .amsler-instruction li { 
             margin-bottom: 2px; 
@@ -174,7 +174,7 @@
         .action-buttons {
             display: flex;
             flex-direction: row; 
-            gap: 6px; /* 🚀 縮小按鈕之間的間距，還給文字更多空間 */
+            gap: 12px; /* 🚀 增加按鈕間距，避免誤按 */
             flex-shrink: 0; 
         }
 
@@ -182,9 +182,9 @@
             display: block; 
             width: auto; 
             margin: 0; 
-            padding: 6px 8px; /* 🚀 減少按鈕左右留白，讓按鈕變瘦 */
+            padding: 8px 14px; /* 🚀 加大內距，讓按鈕變寬變高，更適合點擊 */
             border-radius: 8px; 
-            font-size: 13px; /* 🚀 稍微縮小按鈕文字 */
+            font-size: 14px; /* 🚀 字體稍微放大一點 */
             font-weight: bold; 
             cursor: pointer; 
             text-align: center;
@@ -328,7 +328,6 @@
         <div class="instruction-and-clear-header">
             <div class="amsler-instruction">
                 <ol>
-                    <!-- 🚀 刪除「格子的」三個字，爭取最關鍵的空間 -->
                     <li><strong>先遮一眼</strong>，用另一眼注視<strong>中心黑點</strong></li> 
                     <li>查看是否發現<strong>扭曲、模糊</strong>或<strong>黑影</strong>區域</li>
                     <li>按<strong style="color: var(--btn-draw-text);">開始標記</strong>可圈選，<strong style="color: var(--btn-clear-text);">清除標記</strong>可清除</li>
