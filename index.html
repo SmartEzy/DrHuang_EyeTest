@@ -32,7 +32,7 @@
             --btn-clear-bg: #fee2e2;
             --btn-clear-text: #b91c1c;
             --btn-clear-border: #fca5a5;
-            /* 🚀 標記按鈕配色：淺藍底、深藍字 */
+            /* 標記按鈕配色：淺藍底、深藍字 */
             --btn-draw-bg: #e0f2fe;
             --btn-draw-text: #0284c7;
             --btn-draw-border: #bae6fd;
@@ -52,7 +52,7 @@
             --btn-clear-bg: #7f1d1d;
             --btn-clear-text: #fecaca;
             --btn-clear-border: #991b1b;
-            /* 🚀 標記按鈕配色(高對比)：暗藍底、淺藍字 */
+            /* 標記按鈕配色(高對比)：暗藍底、淺藍字 */
             --btn-draw-bg: #0f172a;
             --btn-draw-text: #38bdf8;
             --btn-draw-border: #0284c7;
@@ -170,7 +170,7 @@
             touch-action: none; cursor: crosshair;
         }
         
-        /* 🚀 建立按鈕群組容器 */
+        /* 按鈕群組容器：利用絕對定位浮動在右下角的空白處，不佔用行數 */
         .action-buttons {
             position: absolute;
             right: 0;           
@@ -201,7 +201,6 @@
             opacity: 0.8;
         }
 
-        /* 🚀 標記按鈕樣式 */
         .toggle-draw-btn {
             display: inline-block; 
             width: auto; 
@@ -323,14 +322,15 @@
         
         <div class="instruction-and-clear-header">
             <div class="amsler-instruction">
+                <!-- 🚀 依照您的需求進行文字與顏色修改 -->
                 <ol>
-                    <li><strong>先遮左眼</strong>，用右眼注視格子的<strong>中心黑點</strong></li> 
-                    <!-- 🚀 更新了說明文字，指引使用者先按按鈕 -->
-                    <li>若發現<strong>扭曲、模糊或黑影</strong>區域，請點擊<strong>開始標記</strong>即可在格子上圈選。寫錯請按<strong style="color: var(--btn-clear-text);">清除標記</strong></li>
-                    <li><strong>換遮右眼</strong>，用左眼重複以上步驟</li>
+                    <li><strong>先遮一眼</strong>，用另一眼注視格子的<strong>中心黑點</strong></li> 
+                    <li><strong>查看是否發現</strong><strong>扭曲、模糊或黑影</strong>區域</li>
+                    <li>可點擊<strong style="color: var(--btn-draw-text);">開始標記</strong>在格子上圈選，清除請按<strong style="color: var(--btn-clear-text);">清除標記</strong></li>
+                    <li><strong>換遮另一眼</strong>，重複以上步驟</li>
                 </ol>
             </div>
-            <!-- 🚀 將按鈕包裝在一起，並加入開始標記按鈕 -->
+            
             <div class="action-buttons">
                 <button id="toggleDrawBtn" class="toggle-draw-btn">開始標記</button>
                 <button id="clearCanvasBtn" class="clear-btn">清除標記</button>
@@ -436,9 +436,9 @@
         const toggleDrawBtn = document.getElementById('toggleDrawBtn');
         
         let isDrawing = false;
-        let isDrawModeEnabled = false; // 🚀 預設不開啟畫筆功能
+        let isDrawModeEnabled = false; 
 
-        // 🚀 初始化設定：讓畫布「穿透」，不會阻擋使用者手指滑動網頁
+        // 預設讓畫布「穿透」，不會阻擋使用者滑動
         canvas.style.pointerEvents = 'none';
 
         function resizeCanvas() {
@@ -453,18 +453,17 @@
         window.addEventListener('load', resizeCanvas);
         window.addEventListener('resize', resizeCanvas);
 
-        // 🚀 切換標記模式的邏輯
         toggleDrawBtn.addEventListener('click', function() {
             isDrawModeEnabled = !isDrawModeEnabled;
             if (isDrawModeEnabled) {
                 this.classList.add('active');
                 this.innerText = '結束標記';
-                canvas.style.pointerEvents = 'auto'; // 開啟畫布觸控
+                canvas.style.pointerEvents = 'auto'; 
             } else {
                 this.classList.remove('active');
                 this.innerText = '開始標記';
-                canvas.style.pointerEvents = 'none'; // 關閉畫布觸控，允許網頁捲動
-                stopDrawing(); // 強制停止當前可能的繪圖動作
+                canvas.style.pointerEvents = 'none'; 
+                stopDrawing(); 
             }
         });
 
@@ -485,7 +484,7 @@
         }
 
         function startDrawing(e) {
-            if (!isDrawModeEnabled) return; // 雙重保險：未開啟標記功能不執行
+            if (!isDrawModeEnabled) return; 
             e.preventDefault(); 
             isDrawing = true;
             const pos = getPointerPos(e);
